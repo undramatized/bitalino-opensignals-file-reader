@@ -1,17 +1,7 @@
-# -*- coding: utf-8 -*-
-
-"""
-.. module:: opensignalsfilereader
-
-Created on Fri Jan 26 11:48:06 2018
-
-@author: Joana
-
-"""
-
-import numpy as np 
+import numpy as np
 import json
 
+FILE_PATH = 'Samples/{filename}'
 
 def OpenSignalsFileReader (file):
     
@@ -45,8 +35,7 @@ def OpenSignalsFileReader (file):
     
     #Define header
     header = json.loads(header[1])
-    
-    devices = header[header.keys()[0]]
+    devices = header[list(header.keys())[0]]
 
     #Read "Sampling Rate" from header
     s_rate = devices['sampling rate']
@@ -61,15 +50,18 @@ def OpenSignalsFileReader (file):
 
 if __name__ == '__main__':
     
-    filename = "FILE_NAME.txt"
+    filename = "SampleEDA.txt"
+    file = FILE_PATH.format(filename=filename)
     
     #shows the content of the file read
+
+    extracted_data = OpenSignalsFileReader(file)
     
     print (' Header:')
-    print(OpenSignalsFileReader(filename)[2])
+    print(extracted_data[2])
 
     print ('\n Extracted Data:')
-    print(OpenSignalsFileReader(filename)[0])
+    print(extracted_data[0], len(extracted_data[0]))
     
     print ('\n Time line:')
-    print(OpenSignalsFileReader(filename)[1])
+    print(extracted_data[1], len(extracted_data[1]))
